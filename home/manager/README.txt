@@ -1,0 +1,1 @@
+This is game, review and comments manager section for personal and business user.

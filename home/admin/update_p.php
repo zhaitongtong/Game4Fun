@@ -1,0 +1,90 @@
+<?php
+
+session_start();
+
+include("../../mysqli_connect.php");
+
+$_SESSION["pid"] = $_POST["pid"];
+
+$sql = "SELECT * FROM personaluser WHERE userID = '".$_SESSION["pid"]."'";
+
+$result = mysqli_query($conn, $sql);
+
+if (!$sql) {
+	die ('SQL Error: ' . mysqli_error($conn));
+}
+
+$row = mysqli_fetch_array($result);
+
+$_SESSION["pname"] = $row["userName"];
+$_SESSION["ppsw"] = $row["password"];
+$_SESSION["pmail"] = $row["mail"];
+$_SESSION["pnotif"] = $row["notification"];
+$_SESSION["pcountry"] = $row["country"];
+$_SESSION["pgender"] = $row["gender"];
+$_SESSION["page"] = $row["age"];
+
+mysqli_close($conn);
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Personal User update Page</title>
+</head>
+<style>
+</style>
+<body>
+	<form style="text-align: center;" action="p_update.php" method= "POST" target="_self">
+		<h2 style="font-size: 20; size: 20"><caption>Personal user information</caption></h2>
+		<span>(<span style="color: red">*</span> part must be filled)</span><br>
+		<br>
+		<span style="color: red">*</span>
+		Email:<br>
+		<input type="text" name="email" value=<?php echo $_SESSION["pmail"];?> required>
+		<br>
+		<br>
+		<span style="color: red">*</span>
+		User Name(less than 20 character):<br>
+		<input type="text" name="uname" value=<?php echo $_SESSION["pname"];?> maxlength="20" required>
+		<br>
+		<br>
+		<span style="color: red">*</span>
+		Password(less than 30 character):<br>
+		<input type="text" name="psw" value=<?php echo $_SESSION["ppsw"];?> maxlength="30" required>
+		<br>
+		<br>
+		Gender:<br>
+		<input type="radio" name="gender" value="Male" <?php if($_SESSION["pgender"] == "Male") { echo "checked";}?>> Male
+		<input type="radio" name="gender" value="Female" <?php if($_SESSION["pgender"] == "Female") { echo "checked";}?>> Female<br>
+		<br>
+		Age:<br>
+		<input type="number" name="age" value=<?php echo $_SESSION["page"];?> min="0" max="100">
+		<br>
+		<br>
+		Country:<br>
+		<select  name="country" style="color:black">
+			<option value="" <?php if($_SESSION["pcountry"] == "") { echo "selected";}?>></option>
+			<option value="Afghanistan"  <?php if($_SESSION["pcountry"] == "Afghanistan") { echo "selected";}?>>Afghanistan</option>
+			<option value="Albania" <?php if($_SESSION["pcountry"] == "Albania") { echo "selected";}?>>Albania</option>
+			<option value="Algeria"  <?php if($_SESSION["pcountry"] == "Algeria") { echo "selected";}?>>Algeria</option>
+		</select>
+		<br>
+		<br>
+		<span style="color: red">*</span>
+		Notification:<br>
+		<input type="radio" name="notif" value="1" <?php if($_SESSION["pnotif"] == "1") { echo "checked";}?>> Yes
+		<input type="radio" name="notif" value="0" <?php if($_SESSION["pnotif"] == "0") { echo "checked";}?>> No
+		<br>
+		<b style="color: red"><?php echo $_SESSION["rep"];
+		$_SESSION["rep"] = " "; ?></b>
+		<br>
+		<input type="reset" value="reset">
+		<input type="submit" value="update">	
+	</form>
+</body>
+
+<form style="text-align: center;" action="a_reset_personal.php" target="_self">
+	<input type="submit" value="Back">	
+</html>
