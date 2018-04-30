@@ -1,5 +1,1 @@
-# web_game4fun
-
-our first version of game4fun web.
-
-we have a big dream!!!!!!
+This is a simple game review website that basically allows personal users to post reviews, write commentaries, and allows business users to release their new games and update game information. 
