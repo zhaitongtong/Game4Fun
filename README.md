@@ -1,1 +1,1 @@
-This is a simple game review website that basically allows personal users to post reviews, write commentaries, and allows business users to release their new games and update game information. 
+A simple game review website which allows personal users to write reviews and post comments, and allows business users (game companies) to release new products and update product information. 
